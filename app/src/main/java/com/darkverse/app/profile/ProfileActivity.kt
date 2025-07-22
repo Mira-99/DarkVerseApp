@@ -1,5 +1,6 @@
 package com.darkverse.app.profile
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.darkverse.app.databinding.ActivityProfileBinding
@@ -25,8 +26,6 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.editProfileButton.setOnClickListener {
             // TODO: Implement edit profile functionality
-            // For now, just show a toast
-            // Toast.makeText(this, "تعديل الملف الشخصي قيد التطوير", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -38,22 +37,26 @@ class ProfileActivity : AppCompatActivity() {
                     val user = it.getValue(User::class.java)
                     if (user != null) {
                         displayUserProfile(user)
-                    } else {
-                        // Handle case where user data is not found
                     }
-                }
-                .addOnFailureListener {
-                    // Handle error
                 }
         }
     }
 
     private fun displayUserProfile(user: User) {
         binding.usernameTextView.text = user.displayName
-        binding.rankTextView.text = "الرتبة: ${user.rank.displayName}"
         binding.bioTextView.text = user.bio.ifEmpty { "لا توجد سيرة ذاتية." }
-        // Load profile image using a library like Glide or Picasso
-        // For now, default image is used
+
+        // عرض الرتبة ولونها
+        val rankText = "الرتبة: ${user.rank.displayName}"
+        binding.rankTextView.text = rankText
+
+        try {
+            val color = Color.parseColor(user.rank.colorHex)
+            binding.rankTextView.setTextColor(color)
+        } catch (e: Exception) {
+            binding.rankTextView.setTextColor(Color.GRAY) // لون افتراضي لو صار خطأ
+        }
+
+        // يمكنك لاحقًا إضافة تحميل صورة البروفايل باستخدام Glide
     }
 }
-
