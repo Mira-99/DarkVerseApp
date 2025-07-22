@@ -19,17 +19,25 @@ data class User(
     val premiumExpiry: Long = 0,
     val language: String = "ar",
     val darkTheme: Boolean = true,
-    val countryCode: String = "",
-    val nativeLanguages: List<String> = emptyList(), // Languages user speaks natively
-    val learningLanguages: List<String> = emptyList(), // Languages user wants to learn
+    val countryCode: String = "", // مثال: "SY" أو "TR" أو "IQ"
+    val nativeLanguages: List<String> = emptyList(), // لغات المستخدم الأصلية
+    val learningLanguages: List<String> = emptyList(), // لغات يود تعلمها
     val age: Int = 18,
     val gender: String = "", // "male", "female", "other"
-    val interests: List<String> = emptyList(), // Anime genres, hobbies, etc.
-    val lookingFor: String = "language_exchange", // "language_exchange", "friendship", "anime_discussion"
-    val isAvailableForMatching: Boolean = true
+    val interests: List<String> = emptyList(), // أنواع الأنمي، هوايات...
+    val lookingFor: String = "language_exchange", // أو: friendship, anime_discussion
+    val isAvailableForMatching: Boolean = true, // هل مستعد للتطابق؟
+    val flagEmoji: String = "", // لتخزين الإيموجي الخاص بالعلم
+    val isProfilePublic: Boolean = true, // خصوصية الملف الشخصي
+    val followersCount: Int = 0, // عدد المتابعين
+    val followingCount: Int = 0 // عدد يلي بيتابعهم
 )
 
-enum class UserRank(val displayName: String, val color: String, val minLevel: Int) {
+enum class UserRank(
+    val displayName: String,
+    val color: String,
+    val minLevel: Int
+) {
     NEWBIE("مبتدئ", "#8E8E93", 1),
     OTAKU("أوتاكو", "#007AFF", 5),
     SENPAI("سينباي", "#34C759", 15),
@@ -38,4 +46,3 @@ enum class UserRank(val displayName: String, val color: String, val minLevel: In
     SHADOW_MASTER("سيد الظلال", "#5856D6", 75),
     DARK_LORD("سيد الظلام", "#000000", 100)
 }
-
