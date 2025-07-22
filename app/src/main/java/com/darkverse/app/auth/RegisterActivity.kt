@@ -45,7 +45,7 @@ class RegisterActivity : AppCompatActivity() {
         }
         
         // زر تسجيل الدخول كضيف
-        binding.guestLoginButton.setOnClickListener {
+        binding.guestButton.setOnClickListener {
             loginAsGuest()
         }
     }
@@ -131,13 +131,13 @@ class RegisterActivity : AppCompatActivity() {
     }
     
     private fun loginAsGuest() {
-        binding.guestLoginButton.isEnabled = false
-        binding.guestLoginButton.text = "جاري تسجيل الدخول كضيف..."
+        binding.guestButton.isEnabled = false
+        binding.guestButton.text = "جاري تسجيل الدخول كضيف..."
         
         auth.signInAnonymously()
             .addOnCompleteListener(this) { task ->
-                binding.guestLoginButton.isEnabled = true
-                binding.guestLoginButton.text = "الدخول كضيف"
+                binding.guestButton.isEnabled = true
+                binding.guestButton.text = "متابعة كضيف"
                 
                 if (task.isSuccessful) {
                     Toast.makeText(this, "تم تسجيل الدخول كضيف", Toast.LENGTH_SHORT).show()
