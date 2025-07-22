@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_background"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/achievementTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="أول رسالة"
+        app:layout_constraintEnd_toStartOf="@+id/achievementStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/achievementDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/light_gray"
+        android:textSize="14sp"
+        tools:text="أرسل رسالتك الأولى في DarkVerse"
+        app:layout_constraintEnd_toStartOf="@+id/achievementStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/achievementTitle" />
+
+    <TextView
+        android:id="@+id/achievementCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@color/dark_purple"
+        android:padding="4dp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        tools:text="اجتماعي"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/achievementDescription" />
+
+    <TextView
+        android:id="@+id/achievementRarity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:padding="4dp"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        tools:text="شائع"
+        app:layout_constraintStart_toEndOf="@+id/achievementCategory"
+        app:layout_constraintTop_toBottomOf="@+id/achievementDescription" />
+
+    <TextView
+        android:id="@+id/achievementStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="مفتوح"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
