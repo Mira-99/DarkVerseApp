@@ -19,20 +19,13 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Download Android SDK command line tools
-      uses: reactivecircus/android-sdk@v2
-      with:
-        api-level: 33
-        build-tools: 33.0.1
-        components: platform-tools
-
-    - name: Grant execute permission for gradlew
+    - name: Make gradlew executable
       run: chmod +x ./gradlew
 
     - name: Build Debug APK
-      run: ./gradlew assembleDebug --stacktrace --info
+      run: ./gradlew assembleDebug
 
-    - name: Upload APK artifact
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: DarkVerseApp-APK
