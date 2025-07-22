@@ -134,6 +134,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/confirmPasswordInputLayout" />
 
+        <!-- زر تسجيل كضيف -->
+        <Button
+            android:id="@+id/guestButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="#555555"
+            android:text="متابعة كضيف"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerButton" />
+
         <TextView
             android:id="@+id/loginText"
             android:layout_width="wrap_content"
@@ -144,8 +158,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerButton" />
+            app:layout_constraintTop_toBottomOf="@+id/guestButton" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
-
