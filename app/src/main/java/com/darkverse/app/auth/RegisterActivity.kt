@@ -43,6 +43,11 @@ class RegisterActivity : AppCompatActivity() {
         binding.loginText.setOnClickListener {
             finish()
         }
+        
+        // زر تسجيل الدخول كضيف
+        binding.guestLoginButton.setOnClickListener {
+            loginAsGuest()
+        }
     }
     
     private fun validateInput(username: String, email: String, password: String, confirmPassword: String): Boolean {
@@ -106,7 +111,7 @@ class RegisterActivity : AppCompatActivity() {
             username = username,
             email = email,
             displayName = username,
-            rank = UserRank.NEWBIE.name,  // خزن اسم الرتبة كسلسلة نصية
+            rank = UserRank.NEWBIE.name,
             level = 1,
             experience = 0
         )
@@ -121,6 +126,24 @@ class RegisterActivity : AppCompatActivity() {
                     navigateToMain()
                 } else {
                     Toast.makeText(this, "فشل في حفظ بيانات المستخدم", Toast.LENGTH_LONG).show()
+                }
+            }
+    }
+    
+    private fun loginAsGuest() {
+        binding.guestLoginButton.isEnabled = false
+        binding.guestLoginButton.text = "جاري تسجيل الدخول كضيف..."
+        
+        auth.signInAnonymously()
+            .addOnCompleteListener(this) { task ->
+                binding.guestLoginButton.isEnabled = true
+                binding.guestLoginButton.text = "الدخول كضيف"
+                
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "تم تسجيل الدخول كضيف", Toast.LENGTH_SHORT).show()
+                    navigateToMain()
+                } else {
+                    Toast.makeText(this, "فشل في تسجيل الدخول كضيف: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
     }
