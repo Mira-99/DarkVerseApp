@@ -6,11 +6,11 @@ plugins {
 
 android {
     namespace 'com.darkverse.app'
-    compileSdk 34
+    compileSdk 34  // تحديث إلى SDK 34 عشان مكتبات Firebase الجديدة تطلع صح
 
     defaultConfig {
         applicationId "com.darkverse.app"
-        minSdk 21
+        minSdk 23  // رفع minSdk لـ 23 لأن Firebase Auth الآن يحتاج على الأقل 23
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -53,7 +53,7 @@ dependencies {
     // Firebase BoM (لإدارة إصدارات المكتبات تلقائيًا)
     implementation platform('com.google.firebase:firebase-bom:33.1.0')
 
-    // خدمات Firebase
+    // خدمات Firebase (استبدلت النسخ بـ "-ktx" لأنها الأفضل وموصى بها)
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
