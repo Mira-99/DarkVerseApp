@@ -2,9 +2,7 @@ package com.darkverse.app.profile
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
 import com.darkverse.app.databinding.ActivityProfileBinding
 import com.darkverse.app.models.User
 import com.darkverse.app.models.UserRank
@@ -28,7 +26,7 @@ class ProfileActivity : AppCompatActivity() {
         loadUserProfile()
 
         binding.editProfileButton.setOnClickListener {
-            // TODO: افتح شاشة تعديل البروفايل
+            // TODO: إضافة وظيفة تعديل الملف الشخصي
         }
     }
 
@@ -36,16 +34,11 @@ class ProfileActivity : AppCompatActivity() {
         val userId = auth.currentUser?.uid
         if (userId != null) {
             database.reference.child("users").child(userId).get()
-                .addOnSuccessListener { snapshot ->
-                    val user = snapshot.getValue(User::class.java)
+                .addOnSuccessListener {
+                    val user = it.getValue(User::class.java)
                     if (user != null) {
                         displayUserProfile(user)
-                    } else {
-                        binding.usernameTextView.text = "حدث خطأ في تحميل البيانات."
                     }
-                }
-                .addOnFailureListener {
-                    binding.usernameTextView.text = "تعذر الوصول إلى قاعدة البيانات."
                 }
         }
     }
@@ -54,28 +47,15 @@ class ProfileActivity : AppCompatActivity() {
         binding.usernameTextView.text = user.displayName
         binding.bioTextView.text = user.bio.ifEmpty { "لا توجد سيرة ذاتية." }
 
-        // عرض صورة البروفايل
-        if (!user.profileImageUrl.isNullOrEmpty()) {
-            Glide.with(this)
-                .load(user.profileImageUrl)
-                .into(binding.profileImageView)
-        }
-
-        // عرض البلد، اللغة، الجنس
-        binding.countryTextView.text = "البلد: ${user.country.ifEmpty { "غير محدد" }}"
-        binding.languageTextView.text = "اللغة: ${user.language.ifEmpty { "غير محددة" }}"
-        binding.genderTextView.text = "الجنس: ${user.gender.ifEmpty { "غير محدد" }}"
-
-        // عرض الرتبة ولونها
+        // تحويل اسم الرتبة النصي إلى كائن UserRank
         val userRank = try {
             UserRank.valueOf(user.rank)
         } catch (e: Exception) {
-            UserRank.NEWBIE
+            UserRank.NEWBIE // رتبة افتراضية إذا لم تتعرف الرتبة
         }
 
-        val rankText = "الرتبة: ${userRank.displayName}"
-        binding.rankTextView.text = rankText
-
+        // عرض اسم الرتبة ولونها
+        binding.rankTextView.text = "الرتبة: ${userRank.displayName}"
         try {
             val color = Color.parseColor(userRank.color)
             binding.rankTextView.setTextColor(color)
@@ -83,14 +63,6 @@ class ProfileActivity : AppCompatActivity() {
             binding.rankTextView.setTextColor(Color.GRAY)
         }
 
-        // عرض علم البلد (لاحقًا ممكن نحط صورة حسب رمز الدولة)
-        binding.flagEmojiTextView.text = getFlagEmoji(user.countryCode)
-    }
-
-    private fun getFlagEmoji(countryCode: String?): String {
-        if (countryCode.isNullOrEmpty()) return "🏳️"
-        return countryCode.uppercase()
-            .map { char -> Character.toChars(0x1F1E6 - 'A'.code + char.code).concatToString() }
-            .joinToString("")
+        // تحميل صورة البروفايل (يمكن إضافة Glide لاحقاً)
     }
 }
