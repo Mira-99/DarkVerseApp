@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.darkverse.app.databinding.ActivityRanksAchievementsBinding
 import com.darkverse.app.models.AchievementsData
 import com.darkverse.app.models.User
+import com.darkverse.app.models.UserRank
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
@@ -42,26 +43,23 @@ class RanksAchievementsActivity : AppCompatActivity() {
                     val user = snapshot.getValue(User::class.java)
                     if (user != null) {
                         displayUserRankAndLevel(user)
-                        // Update achievements based on user progress
                         updateAchievements(user)
                     }
                 }
                 .addOnFailureListener {
-                    // Handle error
+                    // Handle error if needed
                 }
         }
     }
 
     private fun displayUserRankAndLevel(user: User) {
-        binding.currentRankTextView.text = user.rank.displayName
+        val userRank = UserRank.fromName(user.rank)
+        binding.currentRankTextView.text = userRank.displayName
         binding.currentLevelTextView.text = user.level.toString()
     }
 
     private fun updateAchievements(user: User) {
-        // This would typically check user's progress against achievement requirements
-        // and update the achievements list accordingly
-        // For now, we'll just refresh the adapter
+        // تحديث الإنجازات حسب بيانات المستخدم (لو عندك منطق معين)
         achievementsAdapter.notifyDataSetChanged()
     }
 }
-
