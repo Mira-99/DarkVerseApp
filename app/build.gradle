@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace 'com.darkverse.app'
-    compileSdk 34  // تم التحديث إلى 34
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.darkverse.app"
         minSdk 21
-        targetSdk 34  // تم التحديث إلى 34
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -41,20 +41,26 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/LICENSE.md', 'META-INF/LICENSE-notice.md']
+        }
+    }
 }
 
 dependencies {
-    // Firebase BoM (Bill of Materials) - لإدارة نسخ المكتبات تلقائياً
-    implementation platform('com.google.firebase:firebase-bom:33.16.0')
+    // Firebase BoM (لإدارة إصدارات المكتبات تلقائيًا)
+    implementation platform('com.google.firebase:firebase-bom:33.1.0')
 
-    // Firebase Services
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-auth'
-    implementation 'com.google.firebase:firebase-database'
+    // خدمات Firebase
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
 
-    // AndroidX & Material
+    // مكتبات AndroidX و Material
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
@@ -63,7 +69,7 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.7.2'
     implementation 'androidx.fragment:fragment-ktx:1.6.1'
 
-    // Glide للصور والـ GIF
+    // مكتبة Glide للصور و GIF
     implementation 'com.github.bumptech.glide:glide:4.15.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
 
