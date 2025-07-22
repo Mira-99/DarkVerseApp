@@ -1,17 +1,17 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services' // ضروري لتفعيل Firebase
+    id 'com.google.gms.google-services' // لتفعيل Firebase
 }
 
 android {
     namespace 'com.darkverse.app'
-    compileSdk 33
+    compileSdk 34  // تم التحديث إلى 34
 
     defaultConfig {
         applicationId "com.darkverse.app"
         minSdk 21
-        targetSdk 33
+        targetSdk 34  // تم التحديث إلى 34
         versionCode 1
         versionName "1.0"
 
@@ -43,21 +43,16 @@ android {
     }
 }
 
-// نسخة BoM للفيريبيز
-ext {
-    firebase_bom_version = '33.16.0'
-}
-
 dependencies {
-    // Firebase BoM
-    implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
+    // Firebase BoM (Bill of Materials) - لإدارة نسخ المكتبات تلقائياً
+    implementation platform('com.google.firebase:firebase-bom:33.16.0')
 
-    // Firebase خدمات
-    implementation "com.google.firebase:firebase-analytics"
-    implementation "com.google.firebase:firebase-auth"
-    implementation "com.google.firebase:firebase-database"
-    implementation "com.google.firebase:firebase-firestore-ktx"
-    implementation "com.google.firebase:firebase-storage-ktx"
+    // Firebase Services
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-database'
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-storage-ktx'
 
     // AndroidX & Material
     implementation 'androidx.core:core-ktx:1.10.1'
