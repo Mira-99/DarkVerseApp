@@ -1,14 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="80dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dp"
+    android:gravity="center"
     android:layout_marginEnd="8dp">
 
     <ImageView
-        android:id="@+id/storyImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/storyImage"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
         android:scaleType="centerCrop"
-        android:src="@drawable/sample_profile"
-        android:background="@drawable/circle_background"/>
-</FrameLayout>
+        android:background="@drawable/story_background"
+        android:padding="2dp" />
+
+    <TextView
+        android:id="@+id/storyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:layout_marginTop="4dp"
+        android:text="اسم" />
+</LinearLayout>
