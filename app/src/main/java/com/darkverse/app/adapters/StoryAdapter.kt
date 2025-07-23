@@ -4,13 +4,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.darkverse.app.R
+import com.darkverse.app.models.Story
 
-class StoryAdapter(private val storyList: List<Int>) : RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
+class StoryAdapter(private val stories: List<Story>) : RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
 
     class StoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val storyImage: ImageView = itemView.findViewById(R.id.storyImageView)
+        val storyImage: ImageView = itemView.findViewById(R.id.storyImage)
+        val storyName: TextView = itemView.findViewById(R.id.storyName)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StoryViewHolder {
@@ -19,11 +22,10 @@ class StoryAdapter(private val storyList: List<Int>) : RecyclerView.Adapter<Stor
     }
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
-        val imageResId = storyList[position]
-        holder.storyImage.setImageResource(imageResId)
+        val story = stories[position]
+        holder.storyImage.setImageResource(story.imageResId)
+        holder.storyName.text = story.name
     }
 
-    override fun getItemCount(): Int {
-        return storyList.size
-    }
+    override fun getItemCount(): Int = stories.size
 }
