@@ -1,25 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="80dp"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
     android:layout_marginEnd="8dp">
 
     <ImageView
-        android:id="@+id/storyImage"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/sample_profile"
+        android:id="@+id/storyImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:background="@drawable/story_ring"
-        android:padding="2dp" />
-
-    <TextView
-        android:id="@+id/storyUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="مستخدم"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        android:gravity="center"/>
-</LinearLayout>
+        android:src="@drawable/sample_profile"
+        android:background="@drawable/circle_background"/>
+</FrameLayout>
