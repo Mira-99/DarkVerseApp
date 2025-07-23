@@ -23,7 +23,8 @@ class HomeActivity : AppCompatActivity() {
             Story("زائر الليل", R.drawable.sample_profile)
         )
 
-        binding.storyRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.storyRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.storyRecyclerView.adapter = StoryAdapter(stories)
     }
 }
