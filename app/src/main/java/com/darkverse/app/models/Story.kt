@@ -1,6 +1,6 @@
 package com.darkverse.app.models
 
 data class Story(
-    val name: String,
+    val username: String,
     val imageResId: Int
 )
