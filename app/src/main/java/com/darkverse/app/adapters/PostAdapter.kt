@@ -10,10 +10,16 @@ import com.darkverse.app.models.Post
 
 class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
-    class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val usernameText: TextView = itemView.findViewById(R.id.usernameText)
-        val descriptionText: TextView = itemView.findViewById(R.id.descriptionText)
-        val timestampText: TextView = itemView.findViewById(R.id.timestampText)
+    inner class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val usernameText: TextView = itemView.findViewById(R.id.usernameText)
+        private val descriptionText: TextView = itemView.findViewById(R.id.descriptionText)
+        private val timestampText: TextView = itemView.findViewById(R.id.timestampText)
+
+        fun bind(post: Post) {
+            usernameText.text = post.username
+            descriptionText.text = post.description
+            timestampText.text = post.timestamp
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -22,13 +28,8 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = postList[position]
-        holder.usernameText.text = post.username
-        holder.descriptionText.text = post.description
-        holder.timestampText.text = post.timestamp
+        holder.bind(postList[position])
     }
 
-    override fun getItemCount(): Int {
-        return postList.size
-    }
+    override fun getItemCount(): Int = postList.size
 }
