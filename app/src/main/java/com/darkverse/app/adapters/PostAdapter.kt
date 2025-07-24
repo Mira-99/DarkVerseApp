@@ -13,7 +13,7 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val usernameText: TextView = view.findViewById(R.id.usernameText)
         val descriptionText: TextView = view.findViewById(R.id.descriptionText)
-        val timestampText: TextView? = view.findViewById(R.id.timestampText) // لو مستخدم الوقت
+        val timestampText: TextView = view.findViewById(R.id.timestampText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -24,8 +24,8 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = postList[position]
         holder.usernameText.text = post.username
-        holder.descriptionText.text = post.caption // استخدم descriptionText بدل captionText
-        holder.timestampText?.text = post.timestamp
+        holder.descriptionText.text = post.caption
+        holder.timestampText.text = post.timestamp
     }
 
     override fun getItemCount(): Int = postList.size
