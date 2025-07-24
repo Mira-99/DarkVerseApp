@@ -11,7 +11,7 @@ import com.darkverse.app.models.Story
 
 class StoryAdapter(private val stories: List<Story>) : RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
 
-    class StoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class StoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val storyImage: ImageView = itemView.findViewById(R.id.storyImage)
         val storyName: TextView = itemView.findViewById(R.id.storyName)
     }
@@ -23,8 +23,8 @@ class StoryAdapter(private val stories: List<Story>) : RecyclerView.Adapter<Stor
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
         val story = stories[position]
+        holder.storyName.text = story.username
         holder.storyImage.setImageResource(story.imageResId)
-        holder.storyName.text = story.name
     }
 
     override fun getItemCount(): Int = stories.size
