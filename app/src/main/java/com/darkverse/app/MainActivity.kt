@@ -26,10 +26,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadPosts() {
-        // مثال على بيانات وهمية
-        postList.add(Post("ميرا", 0, 0, "أول بوست إلي هون 🎉"))
-        postList.add(Post("نور", 0, 0, "كيفكن يا جماعة؟"))
-
+        postList.add(Post("ميرا", "أول بوست إلي هون 🎉"))
+        postList.add(Post("نور", "كيفكن يا جماعة؟"))
+        postList.add(Post("ميران", "DarkVerse صار شغال 🔥"))
         postAdapter.notifyDataSetChanged()
     }
 }
