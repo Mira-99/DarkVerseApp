@@ -26,9 +26,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadPosts() {
-        postList.add(Post("ميرا", "أول بوست إلي هون 🎉"))
-        postList.add(Post("نور", "كيفكن يا جماعة؟"))
-        postList.add(Post("ميران", "DarkVerse صار شغال 🔥"))
+        postList.clear()
+
+        postList.add(
+            Post(
+                username = "ميرا",
+                caption = "أول بوست إلي هون 🎉",
+                timestamp = "قبل ساعة"
+            )
+        )
+
+        postList.add(
+            Post(
+                username = "نور",
+                caption = "كيفكن يا جماعة؟",
+                timestamp = "قبل 30 دقيقة"
+            )
+        )
+
+        postList.add(
+            Post(
+                username = "ميران",
+                caption = "DarkVerse صار شغال 🔥",
+                timestamp = "الآن"
+            )
+        )
+
         postAdapter.notifyDataSetChanged()
     }
 }
