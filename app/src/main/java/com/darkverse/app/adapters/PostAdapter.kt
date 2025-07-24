@@ -10,10 +10,10 @@ import com.darkverse.app.models.Post
 
 class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
-    inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val usernameText: TextView = view.findViewById(R.id.usernameText)
-        val descriptionText: TextView = view.findViewById(R.id.descriptionText)
-        val timestampText: TextView = view.findViewById(R.id.timestampText)
+    class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val usernameText: TextView = itemView.findViewById(R.id.usernameText)
+        val descriptionText: TextView = itemView.findViewById(R.id.descriptionText)
+        val timestampText: TextView = itemView.findViewById(R.id.timestampText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -24,9 +24,11 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = postList[position]
         holder.usernameText.text = post.username
-        holder.descriptionText.text = post.caption
+        holder.descriptionText.text = post.description
         holder.timestampText.text = post.timestamp
     }
 
-    override fun getItemCount(): Int = postList.size
+    override fun getItemCount(): Int {
+        return postList.size
+    }
 }
