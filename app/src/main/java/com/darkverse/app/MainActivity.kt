@@ -1,50 +1,35 @@
 package com.darkverse.app
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.darkverse.app.chat.MatchingActivity
-import com.darkverse.app.databinding.ActivityMainBinding
-import com.darkverse.app.profile.ProfileActivity
-import com.darkverse.app.ranks.RanksAchievementsActivity
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.darkverse.app.adapters.PostAdapter
+import com.darkverse.app.models.Post
 
 class MainActivity : AppCompatActivity() {
-    
-    private lateinit var binding: ActivityMainBinding
-    private lateinit var firebaseAnalytics: FirebaseAnalytics
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var firebaseDatabase: FirebaseDatabase
+
+    private lateinit var postRecyclerView: RecyclerView
+    private lateinit var postAdapter: PostAdapter
+    private val postList = mutableListOf<Post>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        
-        // Initialize Firebase components
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
-        firebaseAuth = FirebaseAuth.getInstance()
-        firebaseDatabase = FirebaseDatabase.getInstance()
-        
-        // Log an event to Firebase Analytics
-        val bundle = Bundle()
-        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "main_activity")
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "MainActivity Opened")
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle)
+        setContentView(R.layout.activity_main)
 
-        binding.profileButton.setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
-        }
+        postRecyclerView = findViewById(R.id.recyclerView)
+        postRecyclerView.layoutManager = LinearLayoutManager(this)
+        postAdapter = PostAdapter(postList)
+        postRecyclerView.adapter = postAdapter
 
-        binding.matchingButton.setOnClickListener {
-            startActivity(Intent(this, MatchingActivity::class.java))
-        }
+        loadPosts()
+    }
 
-        binding.ranksAchievementsButton.setOnClickListener {
-            startActivity(Intent(this, RanksAchievementsActivity::class.java))
-        }
+    private fun loadPosts() {
+        // مثال على بيانات وهمية
+        postList.add(Post("ميرا", 0, 0, "أول بوست إلي هون 🎉"))
+        postList.add(Post("نور", 0, 0, "كيفكن يا جماعة؟"))
+
+        postAdapter.notifyDataSetChanged()
     }
 }
-
