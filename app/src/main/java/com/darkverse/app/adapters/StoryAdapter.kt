@@ -1,10 +1,8 @@
 package com.darkverse.app.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.darkverse.app.R
 import com.darkverse.app.databinding.ItemStoryBinding
 import com.darkverse.app.models.Story
 
@@ -19,7 +17,7 @@ class StoryAdapter(private val stories: List<Story>) : RecyclerView.Adapter<Stor
 
     override fun onBindViewHolder(holder: StoryViewHolder, position: Int) {
         val story = stories[position]
-        holder.binding.storyImage.setImageResource(story.imageRes)
+        // تم حذف الصورة لأنك ما رح تستخدم صور
         holder.binding.storyUsername.text = story.username
     }
 
