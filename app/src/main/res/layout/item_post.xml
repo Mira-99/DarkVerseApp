@@ -1,63 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#1a1a1a"
-    android:padding="12dp"
+    android:padding="16dp"
     android:layout_marginBottom="10dp"
-    android:layout_marginHorizontal="8dp"
-    android:elevation="3dp">
+    android:elevation="2dp"
+    android:layout_marginHorizontal="8dp">
 
-    <!-- Header: صورة البروفايل واسم المستخدم -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <!-- أزلت ImageView الخاصة بالبروفايل -->
-
-        <TextView
-            android:id="@+id/usernameText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:letterSpacing="0.04" />
-    </LinearLayout>
-
-    <!-- الوصف -->
     <TextView
-        android:id="@+id/descriptionText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="#dddddd"
-        android:textSize="15sp"
-        android:layout_marginTop="6dp"
-        android:lineSpacingExtra="2dp" />
-
-    <!-- أزلت ImageView الخاصة بالصورة أو الفيديو -->
-
-    <!-- الوقت -->
-    <TextView
-        android:id="@+id/timestampText"
+        android:id="@+id/textUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Username"
+        android:textColor="#FF4081"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post content goes here"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
+
+    <ImageView
+        android:id="@+id/imagePost"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/textTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"
         android:textColor="#888888"
         android:textSize="12sp"
-        android:layout_marginTop="6dp" />
-
-    <!-- الأزرار -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="6dp"
-        android:gravity="start">
-
-        <!-- أزلت أزرار الصور -->
-
-    </LinearLayout>
-
+        android:layout_marginTop="4dp" />
 </LinearLayout>
