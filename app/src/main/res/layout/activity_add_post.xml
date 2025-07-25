@@ -1,0 +1,33 @@
+<!-- res/layout/activity_add_post.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#121212"
+    android:padding="16dp">
+
+    <!-- مربع كتابة النص -->
+    <EditText
+        android:id="@+id/editPostContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="بماذا تفكر؟"
+        android:background="@android:color/transparent"
+        android:textColor="#FFFFFF"
+        android:hintTextColor="#888888"
+        android:textSize="16sp"
+        android:minHeight="120dp"
+        android:gravity="top"
+        android:inputType="textMultiLine"/>
+
+    <!-- زر نشر -->
+    <Button
+        android:id="@+id/buttonPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="نشر"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#1F1B24"
+        android:textColor="#FFFFFF" />
+</LinearLayout>
