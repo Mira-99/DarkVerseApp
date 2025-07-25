@@ -29,9 +29,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadSamplePosts() {
-        postList.add(Post("Miran", "أهلاً بكم في تطبيق دارك فيرس 👹", "", System.currentTimeMillis()))
-        postList.add(Post("ShadowKing", "استعدوا للظلام..", "https://picsum.photos/400", System.currentTimeMillis()))
-        postList.add(Post("Reaper", "من هنا يبدأ كل شيء 🔥", "", System.currentTimeMillis()))
+        postList.add(Post(username = "Miran", content = "أهلاً بكم في تطبيق دارك فيرس 👹", imageUrl = "", timestamp = System.currentTimeMillis()))
+        postList.add(Post(username = "ShadowKing", content = "استعدوا للظلام..", imageUrl = "https://picsum.photos/400", timestamp = System.currentTimeMillis()))
+        postList.add(Post(username = "Reaper", content = "من هنا يبدأ كل شيء 🔥", imageUrl = "", timestamp = System.currentTimeMillis()))
         postAdapter.notifyDataSetChanged()
     }
 }
