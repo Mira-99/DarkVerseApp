@@ -13,9 +13,9 @@ import java.util.*
 class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
     class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val usernameText: TextView = itemView.findViewById(R.id.textUsername)
-        val contentText: TextView = itemView.findViewById(R.id.textContent)
-        val timeText: TextView = itemView.findViewById(R.id.textTimestamp)
+        val usernameText: TextView = itemView.findViewById(R.id.usernameTextView)
+        val contentText: TextView = itemView.findViewById(R.id.contentTextView)
+        val timeText: TextView = itemView.findViewById(R.id.dateTextView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
