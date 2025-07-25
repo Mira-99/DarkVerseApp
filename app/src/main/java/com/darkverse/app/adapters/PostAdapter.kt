@@ -9,6 +9,7 @@ import com.darkverse.app.R
 import com.darkverse.app.models.Post
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
@@ -28,9 +29,18 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
         holder.usernameText.text = post.username
         holder.contentText.text = post.content
 
-        val sdf = SimpleDateFormat("dd MMM, HH:mm", Locale.getDefault())
-        val date = Date(post.timestamp)
-        holder.timeText.text = sdf.format(date)
+        val now = System.currentTimeMillis()
+        val diff = now - post.timestamp
+
+        holder.timeText.text = when {
+            diff < TimeUnit.MINUTES.toMillis(1) -> "الآن"
+            diff < TimeUnit.HOURS.toMillis(1) -> "قبل ${TimeUnit.MILLISECONDS.toMinutes(diff)} دقيقة"
+            diff < TimeUnit.DAYS.toMillis(1) -> "قبل ${TimeUnit.MILLISECONDS.toHours(diff)} ساعة"
+            else -> {
+                val sdf = SimpleDateFormat("dd MMM، HH:mm", Locale.getDefault())
+                sdf.format(Date(post.timestamp))
+            }
+        }
     }
 
     override fun getItemCount(): Int = postList.size
