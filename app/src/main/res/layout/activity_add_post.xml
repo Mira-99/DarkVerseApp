@@ -5,21 +5,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#121212"
-    android:padding="16dp">
+    android:padding="20dp"
+    android:gravity="top">
 
     <!-- مربع كتابة النص -->
     <EditText
         android:id="@+id/editPostContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:hint="بماذا تفكر؟"
-        android:background="@android:color/transparent"
+        android:background="@drawable/edittext_background_dark"
         android:textColor="#FFFFFF"
-        android:hintTextColor="#888888"
+        android:hintTextColor="#777777"
         android:textSize="16sp"
-        android:minHeight="120dp"
-        android:gravity="top"
-        android:inputType="textMultiLine"/>
+        android:minHeight="150dp"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:padding="12dp"
+        android:elevation="4dp" />
 
     <!-- زر نشر -->
     <Button
@@ -27,7 +31,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="نشر"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#1F1B24"
-        android:textColor="#FFFFFF" />
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#272727"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_dark_selector"
+        android:textAllCaps="false"
+        android:elevation="2dp"
+        android:paddingVertical="12dp" />
+
 </LinearLayout>
