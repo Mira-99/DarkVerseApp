@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DarkVerseApp">
 
+        <!-- شاشة تسجيل الدخول كبداية -->
         <activity
             android:name=".auth.LoginActivity"
             android:exported="true"
@@ -38,6 +39,12 @@
             android:name=".AddPostActivity"
             android:exported="false"
             android:theme="@style/Theme.DarkVerseApp"/>
+
+        <!-- نشاط عرض المنشورات -->
+        <activity
+            android:name=".post.PostActivity"
+            android:exported="false"
+            android:theme="@style/Theme.DarkVerseApp" />
 
         <activity
             android:name=".profile.ProfileActivity"
