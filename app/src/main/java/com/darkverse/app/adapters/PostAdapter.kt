@@ -18,8 +18,8 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val usernameText: TextView = view.findViewById(R.id.usernameTextView)
         val contentText: TextView = view.findViewById(R.id.contentTextView)
+        val postImageView: ImageView = view.findViewById(R.id.postImageView)
         val timeText: TextView = view.findViewById(R.id.dateTextView)
-        val mediaImageView: ImageView = view.findViewById(R.id.mediaImageView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -30,11 +30,22 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = postList[position]
 
-        // عرض اسم المستخدم والنص
+        // الاسم والمحتوى
         holder.usernameText.text = post.username.ifEmpty { "مجهول" }
         holder.contentText.text = post.content.ifBlank { "بدون محتوى" }
 
-        // حساب الوقت المنقضي
+        // عرض الصورة لو موجودة
+        if (post.mediaUrl.isNotEmpty() && post.mediaType == "image") {
+            holder.postImageView.visibility = View.VISIBLE
+            Glide.with(holder.itemView.context)
+                .load(post.mediaUrl)
+                .placeholder(R.color.gray) // لون رمادي معرّف في colors.xml
+                .into(holder.postImageView)
+        } else {
+            holder.postImageView.visibility = View.GONE
+        }
+
+        // تنسيق الوقت
         val now = System.currentTimeMillis()
         val diff = now - post.timestamp
 
@@ -47,18 +58,6 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
                 val sdf = SimpleDateFormat("dd MMM yyyy، HH:mm", Locale("ar"))
                 sdf.format(Date(post.timestamp))
             }
-        }
-
-        // عرض الصورة إذا كانت موجودة
-        if (post.mediaType == "image" && post.mediaUrl.isNotEmpty()) {
-            holder.mediaImageView.visibility = View.VISIBLE
-            Glide.with(holder.itemView.context)
-                .load(post.mediaUrl)
-                .placeholder(R.color.gray)  // لون رمادي أثناء التحميل
-                .error(R.color.gray)        // لون رمادي لو فشل التحميل
-                .into(holder.mediaImageView)
-        } else {
-            holder.mediaImageView.visibility = View.GONE
         }
     }
 
