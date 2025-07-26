@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
             Post(
                 username = "Miran",
                 content = "أهلاً بكم في تطبيق دارك فيرس 👹",
-                imageUrl = "",
+                mediaUrl = "",
+                mediaType = "",
                 timestamp = System.currentTimeMillis()
             )
         )
@@ -48,7 +49,8 @@ class MainActivity : AppCompatActivity() {
             Post(
                 username = "ShadowKing",
                 content = "استعدوا للظلام..",
-                imageUrl = "https://picsum.photos/400",
+                mediaUrl = "https://picsum.photos/400",
+                mediaType = "image",
                 timestamp = System.currentTimeMillis()
             )
         )
@@ -56,7 +58,8 @@ class MainActivity : AppCompatActivity() {
             Post(
                 username = "Reaper",
                 content = "من هنا يبدأ كل شيء 🔥",
-                imageUrl = "",
+                mediaUrl = "",
+                mediaType = "",
                 timestamp = System.currentTimeMillis()
             )
         )
