@@ -14,16 +14,19 @@
         <EditText
             android:id="@+id/editPostContent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:hint="بماذا تفكر؟"
             android:background="@drawable/edittext_background_dark"
             android:textColor="#FFFFFF"
             android:textColorHint="#777777"
             android:textSize="16sp"
-            android:minHeight="150dp"
             android:gravity="top|start"
             android:inputType="textMultiLine"
             android:padding="12dp"
+            android:overScrollMode="always"
+            android:scrollbars="vertical"
+            android:maxLines="10"
+            android:minLines="5"
             android:elevation="4dp" />
 
         <!-- زر اختيار الوسائط -->
@@ -44,7 +47,8 @@
             android:layout_height="200dp"
             android:layout_marginTop="12dp"
             android:scaleType="centerCrop"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:contentDescription="معاينة الوسائط" />
 
         <!-- زر نشر -->
         <Button
