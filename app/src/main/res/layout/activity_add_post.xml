@@ -1,42 +1,84 @@
-<!-- res/layout/activity_add_post.xml -->
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#121212"
-    android:padding="20dp"
-    android:gravity="top">
+    android:fillViewport="true">
 
-    <!-- مربع كتابة النص -->
-    <EditText
-        android:id="@+id/editPostContent"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:hint="بماذا تفكر؟"
-        android:background="@drawable/edittext_background_dark"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#777777"
-        android:textSize="16sp"
-        android:minHeight="150dp"
-        android:gravity="top|start"
-        android:inputType="textMultiLine"
-        android:padding="12dp"
-        android:elevation="4dp" />
-
-    <!-- زر نشر -->
-    <Button
-        android:id="@+id/buttonPost"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="نشر"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="#272727"
-        android:textColor="#FFFFFF"
-        android:background="@drawable/button_dark_selector"
-        android:textAllCaps="false"
-        android:elevation="2dp"
-        android:paddingVertical="12dp" />
+        android:orientation="vertical"
+        android:padding="20dp">
 
-</LinearLayout>
+        <!-- مربع كتابة النص -->
+        <EditText
+            android:id="@+id/editPostContent"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:hint="بماذا تفكر؟"
+            android:background="@drawable/edittext_background_dark"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#777777"
+            android:textSize="16sp"
+            android:gravity="top|start"
+            android:inputType="textMultiLine"
+            android:padding="12dp"
+            android:elevation="4dp" />
+
+        <!-- معاينة الصورة أو الفيديو -->
+        <ImageView
+            android:id="@+id/selectedImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:background="#222" />
+
+        <VideoView
+            android:id="@+id/selectedVideoView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            android:background="#222" />
+
+        <!-- زر اختيار صورة -->
+        <Button
+            android:id="@+id/buttonPickImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="اختيار صورة"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_dark_selector"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false" />
+
+        <!-- زر اختيار فيديو -->
+        <Button
+            android:id="@+id/buttonPickVideo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="اختيار فيديو"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_dark_selector"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false" />
+
+        <!-- زر النشر -->
+        <Button
+            android:id="@+id/buttonPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="نشر"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_dark_selector"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:elevation="2dp"
+            android:paddingVertical="12dp" />
+
+    </LinearLayout>
+</ScrollView>
