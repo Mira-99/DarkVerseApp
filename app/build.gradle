@@ -1,8 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.kapt'        // تم إضافة هذا السطر
-    id 'com.google.gms.google-services'  // مهم جدًا لفعل Firebase
+    id 'org.jetbrains.kotlin.kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -17,7 +17,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
         vectorDrawables {
             useSupportLibrary true
         }
@@ -50,17 +49,20 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+    verbose = true
+}
+
 dependencies {
-    // Firebase BoM - يساعد على توافق نسخ المكتبات تلقائيًا
     implementation platform('com.google.firebase:firebase-bom:33.1.0')
 
-    // خدمات Firebase المطلوبة
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
-    // دعم مكتبات AndroidX و Material Design
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
@@ -69,11 +71,9 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.7.2'
     implementation 'androidx.fragment:fragment-ktx:1.6.1'
 
-    // Glide لتحميل وعرض الصور بكفاءة
     implementation 'com.github.bumptech.glide:glide:4.15.1'
-    kapt 'com.github.bumptech.glide:compiler:4.15.1' // استخدم kapt بدل annotationProcessor إذا تستخدم Kotlin
+    kapt 'com.github.bumptech.glide:compiler:4.15.1'
 
-    // اختبارات الوحدة والواجهة
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
