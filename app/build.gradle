@@ -49,10 +49,10 @@ android {
     }
 }
 
+// حذف verbose لأنه غير مدعوم في kapt extension
 kapt {
     correctErrorTypes = true
     useBuildCache = true
-    verbose = true
 }
 
 dependencies {
