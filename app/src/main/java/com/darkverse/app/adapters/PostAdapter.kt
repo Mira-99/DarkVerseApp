@@ -13,10 +13,10 @@ import java.util.concurrent.TimeUnit
 
 class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
-    class PostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val usernameText: TextView = itemView.findViewById(R.id.usernameTextView)
-        val contentText: TextView = itemView.findViewById(R.id.contentTextView)
-        val timeText: TextView = itemView.findViewById(R.id.dateTextView)
+    inner class PostViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val usernameText: TextView = view.findViewById(R.id.usernameTextView)
+        val contentText: TextView = view.findViewById(R.id.contentTextView)
+        val timeText: TextView = view.findViewById(R.id.dateTextView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -26,9 +26,12 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = postList[position]
-        holder.usernameText.text = post.username
-        holder.contentText.text = post.content
 
+        // تنسيق الاسم والمحتوى
+        holder.usernameText.text = post.username.ifEmpty { "مجهول" }
+        holder.contentText.text = post.content.ifBlank { "بدون محتوى" }
+
+        // تنسيق الوقت
         val now = System.currentTimeMillis()
         val diff = now - post.timestamp
 
@@ -36,10 +39,16 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
             diff < TimeUnit.MINUTES.toMillis(1) -> "الآن"
             diff < TimeUnit.HOURS.toMillis(1) -> "قبل ${TimeUnit.MILLISECONDS.toMinutes(diff)} دقيقة"
             diff < TimeUnit.DAYS.toMillis(1) -> "قبل ${TimeUnit.MILLISECONDS.toHours(diff)} ساعة"
+            diff < TimeUnit.DAYS.toMillis(7) -> "قبل ${TimeUnit.MILLISECONDS.toDays(diff)} يوم"
             else -> {
-                val sdf = SimpleDateFormat("dd MMM، HH:mm", Locale.getDefault())
+                val sdf = SimpleDateFormat("dd MMM yyyy، HH:mm", Locale("ar"))
                 sdf.format(Date(post.timestamp))
             }
+        }
+
+        // اضغط على المنشور (اختياري)
+        holder.itemView.setOnClickListener {
+            // ممكن تضيف: onPostClickListener?.invoke(post)
         }
     }
 
