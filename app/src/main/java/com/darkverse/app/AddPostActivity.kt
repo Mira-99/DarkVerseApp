@@ -4,109 +4,121 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.darkverse.app.models.Post
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 
 class AddPostActivity : AppCompatActivity() {
 
-    private lateinit var editPostContent: EditText
-    private lateinit var buttonPost: Button
-    private lateinit var mediaPreview: ImageView
-    private lateinit var buttonPickMedia: Button
-    private var mediaUri: Uri? = null
-    private var mediaType: String = ""
+    private lateinit var contentEditText: EditText
+    private lateinit var addMediaButton: Button
+    private lateinit var postButton: Button
+    private lateinit var progressBar: ProgressBar
 
-    companion object {
-        private const val PICK_MEDIA_REQUEST = 1
-    }
+    private var selectedMediaUri: Uri? = null
+    private var selectedMediaType: String = "" // "image" or "video"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_post)
 
-        editPostContent = findViewById(R.id.editPostContent)
-        buttonPost = findViewById(R.id.buttonPost)
-        mediaPreview = findViewById(R.id.mediaPreview)
-        buttonPickMedia = findViewById(R.id.buttonPickMedia)
+        contentEditText = findViewById(R.id.contentEditText)
+        addMediaButton = findViewById(R.id.addMediaButton)
+        postButton = findViewById(R.id.postButton)
+        progressBar = findViewById(R.id.progressBar)
 
-        buttonPickMedia.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "*/*"
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
-            startActivityForResult(intent, PICK_MEDIA_REQUEST)
+        addMediaButton.setOnClickListener {
+            pickMediaFromDevice()
         }
 
-        buttonPost.setOnClickListener {
-            val content = editPostContent.text.toString().trim()
-            if (content.isEmpty() && mediaUri == null) {
-                Toast.makeText(this, "اكتب شيئًا أو اختر إعلامًا", Toast.LENGTH_SHORT).show()
-            } else {
-                if (mediaUri != null) {
-                    uploadMediaAndPost(content)
-                } else {
-                    uploadPost(content, null, null)
-                }
-            }
+        postButton.setOnClickListener {
+            uploadPost()
         }
+    }
+
+    private fun pickMediaFromDevice() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, arrayOf("image/*", "video/*"))
+        startActivityForResult(Intent.createChooser(intent, "Select Media"), 1001)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_MEDIA_REQUEST && resultCode == Activity.RESULT_OK) {
-            mediaUri = data?.data
-            mediaType = contentResolver.getType(mediaUri!!) ?: ""
-            if (mediaType.startsWith("image/")) {
-                mediaPreview.setImageURI(mediaUri)
-                mediaPreview.visibility = ImageView.VISIBLE
-            } else {
-                mediaPreview.setImageResource(R.drawable.video_placeholder) // صورة رمزية للفيديو
-                mediaPreview.visibility = ImageView.VISIBLE
+        if (requestCode == 1001 && resultCode == Activity.RESULT_OK && data != null) {
+            selectedMediaUri = data.data
+            selectedMediaType = when {
+                data.type?.startsWith("image") == true -> "image"
+                data.type?.startsWith("video") == true -> "video"
+                else -> ""
             }
+            Toast.makeText(this, "تم اختيار الوسائط: $selectedMediaType", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun uploadMediaAndPost(content: String) {
-        val filename = UUID.randomUUID().toString()
-        val storageRef = FirebaseStorage.getInstance().getReference("/media/$filename")
+    private fun uploadPost() {
+        val content = contentEditText.text.toString().trim()
+        val username = "DarkUser" // عدّل حسب نظام تسجيل الدخول
+        val timestamp = System.currentTimeMillis()
 
-        mediaUri?.let { uri ->
-            storageRef.putFile(uri)
+        progressBar.visibility = ProgressBar.VISIBLE
+        postButton.isEnabled = false
+
+        if (selectedMediaUri != null) {
+            val filename = UUID.randomUUID().toString()
+            val ref = FirebaseStorage.getInstance().getReference("/posts/$filename")
+
+            ref.putFile(selectedMediaUri!!)
                 .addOnSuccessListener {
-                    storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                        val type = if (mediaType.startsWith("image/")) "image" else "video"
-                        uploadPost(content, downloadUri.toString(), type)
+                    ref.downloadUrl.addOnSuccessListener { uri ->
+                        val post = Post(
+                            username = username,
+                            content = content,
+                            mediaUrl = uri.toString(),
+                            mediaType = selectedMediaType,
+                            timestamp = timestamp
+                        )
+                        savePostToDatabase(post)
                     }
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this, "فشل في رفع الإعلام", Toast.LENGTH_SHORT).show()
+                    showError("فشل في رفع الوسائط")
                 }
+        } else {
+            val post = Post(
+                username = username,
+                content = content,
+                mediaUrl = "",
+                mediaType = "",
+                timestamp = timestamp
+            )
+            savePostToDatabase(post)
         }
     }
 
-    private fun uploadPost(content: String, mediaUrl: String?, mediaType: String?) {
-        val user = FirebaseAuth.getInstance().currentUser
-        val post = Post(
-            username = user?.displayName ?: "مجهول",
-            content = content,
-            mediaUrl = mediaUrl,
-            mediaType = mediaType,
-            timestamp = System.currentTimeMillis()
-        )
+    private fun savePostToDatabase(post: Post) {
+        val dbRef = FirebaseDatabase.getInstance().getReference("posts")
+        val postId = dbRef.push().key ?: return
 
-        FirebaseDatabase.getInstance().getReference("posts")
-            .push()
-            .setValue(post)
+        dbRef.child(postId).setValue(post)
             .addOnSuccessListener {
-                Toast.makeText(this, "تم نشر المنشور", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "تم نشر المنشور!", Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener {
-                Toast.makeText(this, "فشل في النشر", Toast.LENGTH_SHORT).show()
+                showError("فشل في حفظ المنشور")
             }
+    }
+
+    private fun showError(msg: String) {
+        progressBar.visibility = ProgressBar.GONE
+        postButton.isEnabled = true
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
 }
