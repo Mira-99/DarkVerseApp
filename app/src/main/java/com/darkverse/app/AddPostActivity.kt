@@ -60,42 +60,50 @@ class AddPostActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_MEDIA_REQUEST && resultCode == Activity.RESULT_OK) {
-            mediaUri = data?.data
-            mediaType = contentResolver.getType(mediaUri!!) ?: ""
+            data?.data?.let { uri ->
+                mediaUri = uri
+                mediaType = contentResolver.getType(uri) ?: ""
 
-            mediaPreview.visibility = ImageView.VISIBLE
-            if (mediaType.startsWith("image/")) {
-                // استخدم Glide لعرض الصورة
-                Glide.with(this)
-                    .load(mediaUri)
-                    .into(mediaPreview)
-            } else if (mediaType.startsWith("video/")) {
-                // بالنسبة للفيديو، نقدر نعرض صورة مصغرة أو أي placeholder أونلاين
-                // بس للحظة نعرض فقط لون خلفية أو نخبّي الـ ImageView (اختياري)
-                mediaPreview.setImageResource(android.R.color.darker_gray) // لون رمادي بدل صورة
-            } else {
-                mediaPreview.visibility = ImageView.GONE
-                Toast.makeText(this, "نوع الوسائط غير مدعوم", Toast.LENGTH_SHORT).show()
+                mediaPreview.visibility = ImageView.VISIBLE
+                if (mediaType.startsWith("image/")) {
+                    Glide.with(this).load(uri).into(mediaPreview)
+                } else if (mediaType.startsWith("video/")) {
+                    mediaPreview.setImageResource(android.R.color.darker_gray)
+                } else {
+                    mediaPreview.visibility = ImageView.GONE
+                    Toast.makeText(this, "نوع الوسائط غير مدعوم", Toast.LENGTH_SHORT).show()
+                }
+            } ?: run {
+                Toast.makeText(this, "لم يتم اختيار ملف", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun uploadMediaAndPost(content: String) {
+        val uri = mediaUri
+        if (uri == null) {
+            Toast.makeText(this, "لم يتم اختيار أي ملف", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val filename = UUID.randomUUID().toString()
         val storageRef = FirebaseStorage.getInstance().getReference("/media/$filename")
 
-        mediaUri?.let { uri ->
-            storageRef.putFile(uri)
-                .addOnSuccessListener {
-                    storageRef.downloadUrl.addOnSuccessListener { downloadUri ->
+        storageRef.putFile(uri)
+            .addOnSuccessListener {
+                storageRef.downloadUrl
+                    .addOnSuccessListener { downloadUri ->
                         val type = if (mediaType.startsWith("image/")) "image" else "video"
                         uploadPost(content, downloadUri.toString(), type)
                     }
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "فشل في رفع الإعلام", Toast.LENGTH_SHORT).show()
-                }
-        }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "فشل في جلب رابط الملف: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "فشل في رفع الإعلام: ${e.message}", Toast.LENGTH_LONG).show()
+                e.printStackTrace()
+            }
     }
 
     private fun uploadPost(content: String, mediaUrl: String?, mediaType: String?) {
@@ -116,7 +124,7 @@ class AddPostActivity : AppCompatActivity() {
                 finish()
             }
             .addOnFailureListener {
-                Toast.makeText(this, "فشل في النشر", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "فشل في النشر: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
