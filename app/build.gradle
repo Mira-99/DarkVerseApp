@@ -1,7 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'com.google.gms.google-services' // مهم جدًا لفعل Firebase
+    id 'org.jetbrains.kotlin.kapt'        // تم إضافة هذا السطر
+    id 'com.google.gms.google-services'  // مهم جدًا لفعل Firebase
 }
 
 android {
