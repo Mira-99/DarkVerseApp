@@ -3,8 +3,10 @@ package com.darkverse.app.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.darkverse.app.R
 import com.darkverse.app.models.Post
 import java.text.SimpleDateFormat
@@ -17,6 +19,7 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
         val usernameText: TextView = view.findViewById(R.id.usernameTextView)
         val contentText: TextView = view.findViewById(R.id.contentTextView)
         val timeText: TextView = view.findViewById(R.id.dateTextView)
+        val mediaImageView: ImageView = view.findViewById(R.id.mediaImageView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
@@ -27,11 +30,11 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = postList[position]
 
-        // تنسيق الاسم والمحتوى
+        // عرض اسم المستخدم والنص
         holder.usernameText.text = post.username.ifEmpty { "مجهول" }
         holder.contentText.text = post.content.ifBlank { "بدون محتوى" }
 
-        // تنسيق الوقت
+        // حساب الوقت المنقضي
         val now = System.currentTimeMillis()
         val diff = now - post.timestamp
 
@@ -46,9 +49,16 @@ class PostAdapter(private val postList: List<Post>) : RecyclerView.Adapter<PostA
             }
         }
 
-        // اضغط على المنشور (اختياري)
-        holder.itemView.setOnClickListener {
-            // ممكن تضيف: onPostClickListener?.invoke(post)
+        // عرض الصورة إذا كانت موجودة
+        if (post.mediaType == "image" && post.mediaUrl.isNotEmpty()) {
+            holder.mediaImageView.visibility = View.VISIBLE
+            Glide.with(holder.itemView.context)
+                .load(post.mediaUrl)
+                .placeholder(R.color.gray)  // لون رمادي أثناء التحميل
+                .error(R.color.gray)        // لون رمادي لو فشل التحميل
+                .into(holder.mediaImageView)
+        } else {
+            holder.mediaImageView.visibility = View.GONE
         }
     }
 
